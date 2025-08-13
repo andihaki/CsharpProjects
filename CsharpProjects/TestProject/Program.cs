@@ -4,6 +4,6 @@ class Program
     static void Main(string[] args)
     {
         // TestProject.Challenge.StudentsCredit.Run();
-        TestProject.Logic.SwitchCase.Run();
+        TestProject.Logic.ForLoop.Run();
     }
 }
