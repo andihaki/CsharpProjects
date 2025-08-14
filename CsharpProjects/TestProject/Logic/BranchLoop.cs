@@ -36,6 +36,15 @@ class BranchLoop
                 Characteristics = "Domestic animal known for loyalty",
                 Personality = "Friendly and energetic",
                 Nickname = "Buddy"
+            },
+            new Animal
+            {
+                Id = 3,
+                Species = "Brog",
+                Age = 0,
+                Characteristics = "",
+                Personality = "",
+                Nickname = ""
             }
         ];
 
@@ -88,14 +97,12 @@ class BranchLoop
                     readResult = Console.ReadLine();
                     break;
                 case "3":
-                    // EnsureAgesAndDescriptions(ourAnimals);
-                    Console.WriteLine("EnsureAgesAndDescriptions functionality is not implemented yet.");
+                    ourAnimals = EnsureAgesAndCharacteristics(ourAnimals);
                     Console.WriteLine("Press the Enter key to continue.");
                     readResult = Console.ReadLine();
                     break;
                 case "4":
-                    // EnsureNicknamesAndPersonalities(ourAnimals);
-                    Console.WriteLine("EnsureNicknamesAndPersonalities functionality is not implemented yet.");
+                    EnsureNicknamesAndPersonalities(ourAnimals);
                     Console.WriteLine("Press the Enter key to continue.");
                     readResult = Console.ReadLine();
                     break;
@@ -193,5 +200,57 @@ class BranchLoop
         return [.. animals, newAnimal];
 
 
+    }
+
+
+    private static Animal[] EnsureAgesAndCharacteristics(Animal[] animals)
+    {
+        Console.Clear();
+        Console.WriteLine("== Ensuring ages and characteristics are complete ==");
+
+        foreach (var animal in animals)
+        {
+            while (animal.Age <= 0)
+            {
+                Console.Write($"Enter age for {animal.Species} (ID: {animal.Id}): ");
+                if (int.TryParse(Console.ReadLine(), out int age))
+                {
+                    animal.Age = age;
+                }
+            }
+
+            while (string.IsNullOrEmpty(animal.Characteristics))
+            {
+                Console.Write($"Enter characteristics for {animal.Species} (ID: {animal.Id}): ");
+                animal.Characteristics = Console.ReadLine();
+            }
+        }
+
+        Console.WriteLine("Ages and characteristics ensured successfully!");
+        return animals;
+    }
+
+    private static Animal[] EnsureNicknamesAndPersonalities(Animal[] animals)
+    {
+        Console.Clear();
+        Console.WriteLine("== Ensuring nicknames and personalities are complete ==");
+
+        foreach (var animal in animals)
+        {
+            while (string.IsNullOrEmpty(animal.Nickname))
+            {
+                Console.Write($"Enter nickname for {animal.Species} (ID: {animal.Id}): ");
+                animal.Nickname = Console.ReadLine();
+            }
+
+            while (string.IsNullOrEmpty(animal.Personality))
+            {
+                Console.Write($"Enter personality for {animal.Species} (ID: {animal.Id}): ");
+                animal.Personality = Console.ReadLine();
+            }
+        }
+
+        Console.WriteLine("Nicknames and personalities ensured successfully!");
+        return animals;
     }
 }
