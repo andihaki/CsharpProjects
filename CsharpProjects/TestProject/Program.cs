@@ -6,6 +6,6 @@ class Program
         Console.Clear();
         // TestProject.Challenge.StudentsCredit.Run();
         // TestProject.Logic.BranchLoop.Run();
-        TestProject.VariableData.DataTypes.Run();
+        TestProject.VariableData.CastingConversion.Run();
     }
 }
