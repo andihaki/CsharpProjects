@@ -7,6 +7,6 @@ class Program
         // TestProject.Challenge.StudentsCredit.Run();
         // TestProject.Logic.BranchLoop.Run();
         // TestProject.VariableData.ProjectTwo.Run();
-        TestProject.CreateMethod.MethodReturn.Run();
+        TestProject.CreateMethod.ZooPlanner.Run();
     }
 }
