@@ -8,7 +8,7 @@ class ZooPlanner
     public static void Run()
     {
         // US dot decimal separator
-        CultureInfo.CurrentCulture = new CultureInfo("en-US");
+        // CultureInfo.CurrentCulture = new CultureInfo("en-US");
         Planner();
     }
 
@@ -21,21 +21,17 @@ class ZooPlanner
             "ostriches", "pigs", "ponies", "rabbits", "sheep", "tortoises"
         ];
 
-        PrintGroups("School A", AssignGroup(RandomizeAnimals(pettingZoo)));
-        PrintGroups("School B", AssignGroup(RandomizeAnimals(pettingZoo), 3));
-        PrintGroups("School C", AssignGroup(RandomizeAnimals(pettingZoo), 2));
+        PlanSchoolVisit(pettingZoo, "School A");
+        PlanSchoolVisit(pettingZoo, "School B", 3);
+        PlanSchoolVisit(pettingZoo, "School C", 2);
     }
 
-    static string[,] AssignGroup(string[] pets, int groupCount = 6)
+    static void PlanSchoolVisit(string[] pets, string schoolName, int groups = 6)
     {
-        string[,] groups = new string[groupCount, pets.Length / 2];
-        for (int i = 0; i < groupCount; i++)
-        {
-            groups[i, 0] = $"Group {i + 1}";
-            groups[i, 1] = string.Join(", ", pets.Skip(i * pets.Length / groupCount).Take(pets.Length / groupCount));
-        }
-
-        return groups;
+        pets = RandomizeAnimals(pets);
+        string[,] group = AssignGroup(pets, groups);
+        Console.WriteLine(schoolName);
+        PrintGroup(group);
     }
 
     static string[] RandomizeAnimals(string[] pets)
@@ -45,17 +41,38 @@ class ZooPlanner
         for (int i = 0; i < pets.Length; i++)
         {
             int r = random.Next(i, pets.Length);
+
             (pets[i], pets[r]) = (pets[r], pets[i]);
         }
         return pets;
     }
 
-    static void PrintGroups(string schoolName, string[,] groups)
+    static string[,] AssignGroup(string[] pets, int groups = 6)
     {
-        Console.WriteLine(schoolName);
+        string[,] result = new string[groups, pets.Length / groups];
+        int start = 0;
+
+        for (int i = 0; i < groups; i++)
+        {
+            for (int j = 0; j < result.GetLength(1); j++)
+            {
+                result[i, j] = pets[start++];
+            }
+        }
+
+        return result;
+    }
+
+    static void PrintGroup(string[,] groups)
+    {
         for (int i = 0; i < groups.GetLength(0); i++)
         {
-            Console.WriteLine($"{groups[i, 0]}: {groups[i, 1]}");
+            Console.Write($"Group {i + 1}: ");
+            for (int j = 0; j < groups.GetLength(1); j++)
+            {
+                Console.Write($"{groups[i, j]}  ");
+            }
+            Console.WriteLine();
         }
     }
 
