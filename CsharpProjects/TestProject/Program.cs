@@ -7,6 +7,7 @@ class Program
         // TestProject.Challenge.StudentsCredit.Run();
         // TestProject.Logic.BranchLoop.Run();
         // TestProject.VariableData.ProjectTwo.Run();
-        TestProject.CreateMethod.MiniGame.Run();
+        // TestProject.CreateMethod.MiniGame.Run();
+        TestProject.DebugException.Intro.Run();
     }
 }
