@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "gogogo",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "dotnet: build",
+      "program": "${workspaceFolder}/CsharpProjects/TestProject/bin/Debug/net8.0/TestProject.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/CsharpProjects/TestProject",
+      "console": "integratedTerminal",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Launch Project456",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "buildProject456",
+      "program": "${workspaceFolder}/Project456/bin/Debug/net7.0/Project456.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/Project456",
+      "console": "internalConsole",
+      "stopAtEntry": false
+    }
+  ]
+}

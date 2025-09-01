@@ -8,6 +8,6 @@ class Program
         // TestProject.Logic.BranchLoop.Run();
         // TestProject.VariableData.ProjectTwo.Run();
         // TestProject.CreateMethod.MiniGame.Run();
-        TestProject.DebugException.Intro.Run();
+        TestProject.DebugException.Debugger.Run();
     }
 }
