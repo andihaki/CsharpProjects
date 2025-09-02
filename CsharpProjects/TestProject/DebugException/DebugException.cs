@@ -34,7 +34,7 @@ class DebugException
         */
 
         string? readResult = null;
-        bool useTestData = true;
+        bool useTestData = false;
 
         Console.Clear();
 
@@ -62,7 +62,7 @@ class DebugException
 
         var valueGenerator = new Random((int)DateTime.Now.Ticks);
 
-        int transactions = 10;
+        int transactions = 40;
 
         if (useTestData)
         {
@@ -72,7 +72,7 @@ class DebugException
         while (transactions > 0)
         {
             transactions -= 1;
-            int itemCost = valueGenerator.Next(2, 20);
+            int itemCost = valueGenerator.Next(2, 50);
 
             if (useTestData)
             {
@@ -92,18 +92,17 @@ class DebugException
             Console.WriteLine($"\t Using {paymentFives} five dollar bills");
             Console.WriteLine($"\t Using {paymentOnes} one dollar bills");
 
-            // MakeChange manages the transaction and updates the till 
-            string transactionMessage = MakeChange(itemCost, cashTill, paymentTwenties, paymentTens, paymentFives, paymentOnes);
-
-            // Backup Calculation - each transaction adds current "itemCost" to the till
-            if (transactionMessage == "transaction succeeded")
+            try
             {
+                // MakeChange manages the transaction and updates the till 
+                MakeChange(itemCost, cashTill, paymentTwenties, paymentTens, paymentFives, paymentOnes);
+
                 Console.WriteLine($"Transaction successfully completed.");
                 registerCheckTillTotal += itemCost;
             }
-            else
+            catch (InvalidOperationException e)
             {
-                Console.WriteLine($"Transaction unsuccessful: {transactionMessage}");
+                Console.WriteLine($"Transaction failed: {e.Message}");
             }
 
             Console.WriteLine(TillAmountSummary(cashTill));
@@ -128,7 +127,7 @@ class DebugException
         }
 
 
-        static string MakeChange(int cost, int[] cashTill, int twenties, int tens = 0, int fives = 0, int ones = 0)
+        static void MakeChange(int cost, int[] cashTill, int twenties, int tens = 0, int fives = 0, int ones = 0)
         {
             string transactionMessage = "";
 
@@ -141,7 +140,10 @@ class DebugException
             int changeNeeded = amountPaid - cost;
 
             if (changeNeeded < 0)
+            {
                 transactionMessage = "Not enough money provided.";
+                throw new InvalidOperationException(transactionMessage);
+            }
 
             Console.WriteLine("Cashier Returns:");
 
@@ -161,7 +163,8 @@ class DebugException
 
             while ((changeNeeded > 4) && (cashTill[1] > 0))
             {
-                cashTill[2]--;
+                // cashTill[2]--; // bugs
+                cashTill[1]--;
                 changeNeeded -= 5;
                 Console.WriteLine("\t A five");
             }
@@ -174,12 +177,10 @@ class DebugException
             }
 
             if (changeNeeded > 0)
+            {
                 transactionMessage = "Can't make change. Do you have anything smaller?";
-
-            if (transactionMessage == "")
-                transactionMessage = "transaction succeeded";
-
-            return transactionMessage;
+                throw new InvalidOperationException(transactionMessage);
+            }
         }
 
         static void LogTillStatus(int[] cashTill)
