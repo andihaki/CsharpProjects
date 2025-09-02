@@ -32,8 +32,8 @@ class TryCatch
 
         try
         {
-            string str = null;
-            int length = str.Length;
+            string? str = null;
+            int length = str != null ? str.Length : 0;
             Console.WriteLine("String Length: " + length);
         }
         catch (NullReferenceException ex)
